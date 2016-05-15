@@ -30,7 +30,7 @@ public class Projectile extends Movable {
     public void tick() {
         super.tick();
         
-        if (Game.hitWall(x, 0, Game.width - w) || Game.hitWall(y, 0, Game.height - h) || move.hitX || move.hitY) handler.removeObject(this);
+        // if (Game.hitWall(x, 0, Game.width - w) || Game.hitWall(y, 0, Game.height - h) || move.hitX || move.hitY) handler.removeObject(this);
         
         thisTime = (new Date()).getTime();
         
