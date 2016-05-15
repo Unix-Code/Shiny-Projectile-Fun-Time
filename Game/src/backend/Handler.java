@@ -37,7 +37,7 @@ public class Handler {
                 tempObject.tick();
             }
         }
-        System.out.println(Arrays.toString(keys)); // Diagnostic
+        // System.out.println(Arrays.toString(keys)); // Diagnostic
 
     }
 
@@ -60,23 +60,21 @@ public class Handler {
 
         if (keys[Keys.W.value]) {
             ym = 5;
-            tempPlayer.jumping = true;
         }
         else {
             ym = 0;
-            tempPlayer.jumping = false;
         }
 
         if (keys[Keys.A.value]) {
             xm = 5;
-                tempPlayer.setAnimation(tempPlayer.getWalkLeft());
-                tempPlayer.getAnimation().start();
-            
+//                tempPlayer.setAnimation(tempPlayer.getWalkLeft());
+//                tempPlayer.getAnimation().start();
+//            
         }
         else { 
             xm = 0;
-            tempPlayer.getAnimation().stop();
-            tempPlayer.getAnimation().reset();
+//            tempPlayer.getAnimation().stop();
+//            tempPlayer.getAnimation().reset();
 //            tempPlayer.getAnimation().start();
 //            tempPlayer.setAnimation(tempPlayer.getStand());
         }
@@ -90,14 +88,14 @@ public class Handler {
 
         if (keys[Keys.D.value]) {
             xp = 5;
-                tempPlayer.setAnimation(tempPlayer.getWalkRight());
-                tempPlayer.getAnimation().start();
+//                tempPlayer.setAnimation(tempPlayer.getWalkRight());
+//                tempPlayer.getAnimation().start();
             
         }
         else {
             xp = 0;
-            tempPlayer.getAnimation().stop();
-            tempPlayer.getAnimation().reset();
+//            tempPlayer.getAnimation().stop();
+//            tempPlayer.getAnimation().reset();
 //            tempPlayer.getAnimation().start();
 //            tempPlayer.setAnimation(tempPlayer.getStand());
         }

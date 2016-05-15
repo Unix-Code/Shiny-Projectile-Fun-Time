@@ -15,7 +15,6 @@ public class Player extends Character {
     private Animation walkLeft;
     private Animation walkRight;
     private Animation stand;
-    private Animation jump;
 
     // Live animation
     private Animation animation;
@@ -25,8 +24,6 @@ public class Player extends Character {
         walkLeft = new Animation(new BufferedImage[]{Sprite.getSprite(0, 1), Sprite.getSprite(2, 1)}, 12);
         walkRight = new Animation(new BufferedImage[]{Sprite.getSprite(0, 2), Sprite.getSprite(2, 2)}, 12);
         stand = new Animation(new BufferedImage[]{Sprite.getSprite(1, 0)}, 12);
-        // to do
-        jump = null;
 
         this.animation = stand;
         this.animation.start();
@@ -36,7 +33,7 @@ public class Player extends Character {
         super.tick();
         this.detectCollision();
         animation.tick();
-        System.out.println("Animation: " + ((animation.equals(walkLeft)) ? "Left" : ((animation.equals(walkRight)) ? "Right" : ((animation.equals(stand)) ? "Stand" : "IDK"))));
+        // System.out.println("Animation: " + ((animation.equals(walkLeft)) ? "Left" : ((animation.equals(walkRight)) ? "Right" : ((animation.equals(stand)) ? "Stand" : "IDK"))));
     }
 
     public void render(Graphics g) {

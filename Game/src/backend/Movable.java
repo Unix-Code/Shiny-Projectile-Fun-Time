@@ -47,11 +47,11 @@ public class Movable extends Obj {
             ((Player)this).jumping = false;
         } */
         
-        x += move.moveX;
-        y += move.moveY;
+        x += this.velX; // move.moveX;
+        y += this.velY; // move.moveY;
 
-        x = Game.clamp(x, 0, Game.width - w);
-        y = Game.clamp(y, 0, Game.height - h);
+        // x = Game.clamp(x, 0, Game.width - w);
+        // y = Game.clamp(y, 0, Game.height - h);
         // System.out.println("Velocity Y: " + velY);
     }
 

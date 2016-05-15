@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Date;
 
 /**
@@ -19,14 +20,18 @@ public class Game extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean running = false;
+    
     private Handler handler;
-    private Camera cam = new Camera(0, 0);;
+    private Camera cam = new Camera(0, 0);
+    // private BufferedImage level; 
     
     public Game() {
         handler = new Handler();        
         this.addKeyListener(new KeyCheck(handler));
         this.addMouseListener(new MouseCheck(handler));
         new Window(width, height, "Jocular Fibula", this);
+        
+        // level = loadLevelImage( /* image */ );
         
         // handler.addObject(new Background(0, 0));
 //        handler.addObject(new Stationary(0, 4 * height / 5, Game.width, 30, handler));
@@ -40,7 +45,7 @@ public class Game extends Canvas implements Runnable {
             
         }
         handler.addObject(new Player(width / 2, height / 2, 32, 32, 100, handler));
-//        handler.addObject(new Enemy((3 * width) / 4 + 30, 300, 16, 48, 1, 2, 100, 1, handler));
+        handler.addObject(new Enemy((3 * width) / 4 + 30, 300, 16, 48, 100, 1, handler));
     }
 
     public synchronized void start() {
@@ -137,7 +142,20 @@ public class Game extends Canvas implements Runnable {
         g.dispose();
         bs.show();
     }
-
+    
+    private void loadLevelImage(BufferedImage img) {
+        int w = img.getWidth(), h = img.getHeight();
+        
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                int pixel = img.getRGB(i,j);
+                int red = (pixel >> 16) & 0xff, green = (pixel >> 8) & 0xff, blue = (pixel) & 0xff;
+                
+                // spawn new Tiles and Characters
+            }
+        }
+    }
+    
     public static int clamp(int var, int min, int max) {
         return (var >= max) ? var = max : ((var <= min) ? var = min : var);
     }
@@ -152,5 +170,9 @@ public class Game extends Canvas implements Runnable {
     
     public static boolean hitWall(int check, int min, int max) {
         return (check >= max || check <= min);
+    }
+    
+    public static int round(double num) {
+        return (int) ((num - Math.floor(num) >= 0.5) ? Math.floor(num) + 1 : Math.floor(num));
     }
 }
