@@ -36,7 +36,9 @@ public class Character extends Movable {
         
         charHealth.tick();
         this.detectProjectiles();
-        if (!(this.getHealth() > 0)) handler.removeObject(this);
+        if (!(this.getHealth() > 0)) {
+            handler.removeObject(this);
+        }
     }
     
     public HealthBar getHealthBar() {
@@ -55,7 +57,7 @@ public class Character extends Movable {
         for (int i = 0; i < handler.objects.size(); i++) {
             Projectile tempProjectile = null;
             
-            if (handler.objects.get(i).getClass().getName().equals("game.Projectile")) {
+            if (handler.objects.get(i).getClass().getName().equals("backend.Projectile")) {
                 tempProjectile = (Projectile) handler.objects.get(i);
                 
                  if ((this.getId() == ID.Player && tempProjectile.getId() != ID.FriendlyProjectile) ||
