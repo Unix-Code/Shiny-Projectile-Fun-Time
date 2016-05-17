@@ -7,7 +7,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -38,12 +42,14 @@ public class Game extends Canvas implements Runnable {
 //        handler.addObject(new Stationary((int) (2.85 * width / 4), 353, 70, 30, handler));
 //        handler.addObject(new Stationary(100, 50, 50, 20, handler));
 //        handler.addObject(new Stationary(3 * width / 4 - 65, 290, 60, 40, handler));
-        for (int i = 0; i < Game.width; i += Tile.SIZE + 1) {
-            for (int j = 0; j < Game.height; j += Tile.SIZE + 1) {
-                handler.addObject(new Tile(i, j, handler));
-            }
-            
-        }
+        
+//        for (int i = 0; i < Game.width; i += Tile.SIZE + 1) {
+//            for (int j = 0; j < Game.height; j += Tile.SIZE + 1) {
+//                handler.addObject(new Tile(i, j, handler));
+//            }
+//            
+//        }
+        this.loadLevelImage("level");
         handler.addObject(new Player(width / 2, height / 2, 32, 32, 100, handler));
         handler.addObject(new Enemy((3 * width) / 4 + 30, 300, 16, 48, 100, 1, handler));
     }
@@ -143,15 +149,35 @@ public class Game extends Canvas implements Runnable {
         bs.show();
     }
     
-    private void loadLevelImage(BufferedImage img) {
+    private void loadLevelImage(String file) {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("res/" + file + ".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         int w = img.getWidth(), h = img.getHeight();
         
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                int pixel = img.getRGB(i,j);
-                int red = (pixel >> 16) & 0xff, green = (pixel >> 8) & 0xff, blue = (pixel) & 0xff;
+        for (int i = 0; i < w; i+=3) {
+            for (int j = 0; j < h; j+=3) {
+                int tilePixel = img.getRGB(i,j);
+                int centerPixel = img.getRGB(i + 1, j + 1);
+                int red = (tilePixel >> 16) & 0xff, green = (tilePixel >> 8) & 0xff, blue = (tilePixel) & 0xff;
+                this.convertToTile(red, green, blue, i/(int)3, j/(int)3);
                 
                 // spawn new Tiles and Characters
+            }
+        }
+    }
+    
+    private void convertToTile(int red, int green, int blue, int coordX, int coordY) {
+        TileType[] tiles = {TileType.Grass, TileType.Stone, TileType.Water};
+        int[] currRGB = {red, green, blue};
+        
+        for (TileType tile : tiles) {
+            if (Arrays.equals(currRGB, tile.getRGB())) {
+                handler.addObject(tile.getTile(coordX*(Tile.SIZE + 1), coordY*(Tile.SIZE + 1), handler));
             }
         }
     }

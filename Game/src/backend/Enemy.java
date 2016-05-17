@@ -47,16 +47,7 @@ public class Enemy extends Character {
     public void tick() {
         super.tick();
 
-                
         this.watchForPlayer();
-        
-//        if (this.x == startX && this.y == startY && (velX != 0 || velY != 0)) {
-//            velX = 0;
-//            velY = 0;
-//            inPursuit = false;
-//            startTime = (new Date().getTime());
-//        }
-        
     }
     
     public int getDamage() {
