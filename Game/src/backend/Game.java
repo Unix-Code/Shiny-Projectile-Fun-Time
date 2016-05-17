@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();        
         this.addKeyListener(new KeyCheck(handler));
         this.addMouseListener(new MouseCheck(handler));
-        new Window(width, height, "Jocular Fibula", this);
+        new Window(width, height, "Shiny Projectile Fun Time", this);
         
         // level = loadLevelImage( /* image */ );
         
@@ -177,7 +177,7 @@ public class Game extends Canvas implements Runnable {
         
         for (TileType tile : tiles) {
             if (Arrays.equals(currRGB, tile.getRGB())) {
-                handler.addObject(tile.getTile(coordX*(Tile.SIZE + 1), coordY*(Tile.SIZE + 1), handler));
+                handler.addObject(tile.getTile(coordX*(Tile.SIZE/* + 1*/), coordY*(Tile.SIZE/* + 1*/), handler));
             }
         }
     }
