@@ -19,9 +19,9 @@ public class Tile extends Obj{
     private Handler handler;
     public static final int SIZE = 64;
     
-    public Tile(int x, int y/*, BufferedImage texture*/, Handler handler) {
+    public Tile(int x, int y, BufferedImage texture, Handler handler) {
         super(x, y, Tile.SIZE, Tile.SIZE, ID.Tile);
-        // this.texture = texture;
+        this.texture = texture;
         playerOnTop = false;
         this.handler = handler;
     } 
@@ -54,6 +54,7 @@ public class Tile extends Obj{
             g2d.setColor(Color.GREEN);
         }
         g2d.draw(this.getBounds());
+        g2d.drawImage(texture, x, y, w, h, null);
     }
     
     public Rectangle getBounds() {
