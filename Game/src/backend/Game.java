@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();        
         this.addKeyListener(new KeyCheck(handler));
         this.addMouseListener(new MouseCheck(handler));
-        new Window(width, height, "Jocular Fibula", this);
+        new Window(width, height, "Shiny Projectile Fun Time", this);
         
         // level = loadLevelImage( /* image */ );
         
@@ -94,7 +94,7 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                // System.out.println("FPS: " + frames);
+                System.out.println("FPS: " + frames);
                 frames = 0;
             }
             

@@ -53,8 +53,9 @@ public class Tile extends Obj{
         else {
             g2d.setColor(Color.GREEN);
         }
-        g2d.draw(this.getBounds());
+        
         g2d.drawImage(texture, x, y, w, h, null);
+        g2d.draw(this.getBounds());
     }
     
     public Rectangle getBounds() {
