@@ -94,7 +94,7 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                // System.out.println("FPS: " + frames);
                 frames = 0;
             }
             
@@ -177,7 +177,7 @@ public class Game extends Canvas implements Runnable {
         
         for (TileType tile : tiles) {
             if (Arrays.equals(currRGB, tile.getRGB())) {
-                handler.addObject(tile.getTile(coordX*(Tile.SIZE + 1), coordY*(Tile.SIZE + 1), handler));
+                handler.addObject(tile.getTile(coordX*(Tile.SIZE/* + 1*/), coordY*(Tile.SIZE/* + 1*/), handler));
             }
         }
     }

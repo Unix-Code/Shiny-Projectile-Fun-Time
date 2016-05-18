@@ -40,7 +40,7 @@ public enum TileType {
         }
         
         try {
-            texture = ImageIO.read(new File("res/" + file + ".png"));
+            texture = ImageIO.read(new File("res/tile_textures/" + file + ".png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
