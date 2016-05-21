@@ -32,7 +32,7 @@ public class Game extends Canvas implements Runnable {
     public Game() {
         handler = new Handler();        
         this.addKeyListener(new KeyCheck(handler));
-        this.addMouseListener(new MouseCheck(handler));
+        this.addMouseListener(new MouseCheck(handler, cam));
         new Window(width, height, "Shiny Projectile Fun Time", this);
         
         // level = loadLevelImage( /* image */ );

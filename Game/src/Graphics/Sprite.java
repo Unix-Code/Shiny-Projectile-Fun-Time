@@ -27,7 +27,7 @@ public class Sprite {
         return sprite;
     }
 
-    public static BufferedImage getSprite(int xGrid, int yGrid) {
+    public static BufferedImage getSprite(int xGrid, int yGrid/*, String spritesheet*/) {
 
         if (spriteSheet == null) {
             spriteSheet = loadSprite("SpriteSheet1");
