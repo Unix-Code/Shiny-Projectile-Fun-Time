@@ -35,6 +35,15 @@ public class Sprite {
 
         return spriteSheet.getSubimage(xGrid * TILE_SIZE, yGrid * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
-
+    
+    public static BufferedImage[] interpretSpriteSheet(int width, int height, int numSprites, String spritesheet) {
+        BufferedImage[] images = new BufferedImage[numSprites];
+        
+        for (int i = 0; i < images.length; i++) {
+            images[i] = loadSprite(spritesheet).getSubimage(i * width, 0, width, height);
+        }
+        
+        return images;
+    }
 }
 
