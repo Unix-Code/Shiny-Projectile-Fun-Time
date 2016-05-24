@@ -20,7 +20,7 @@ public enum ProjectileType {
             case 0 :
                 sizeX = 41;
                 sizeY = 17;
-                images = Sprite.interpretSpriteSheet(sizeX, sizeY, 4, "projectiles/Projectile Sprite Sheet - Strike");
+                images = Sprite.interpretSpriteSheet(sizeX, sizeX, 4, "projectiles/Projectile Sprite Sheet - Strike");
                 break;
             case 1 :
                 sizeX = 15; 

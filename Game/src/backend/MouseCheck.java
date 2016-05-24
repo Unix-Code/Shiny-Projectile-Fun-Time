@@ -18,7 +18,7 @@ public class MouseCheck extends MouseAdapter {
     private final ProjectileType[] projectiles;
     
     public MouseCheck(Handler handler, Camera cam) {
-        this.projectiles = new ProjectileType[]{ProjectileType.Blast/*, ProjectileType.Strike, ProjectileType.Bolt*/};
+        this.projectiles = new ProjectileType[]{ProjectileType.Blast/*, ProjectileType.Strike/*, ProjectileType.Bolt*/};
         this.handler = handler;
         this.cam = cam;
     }
