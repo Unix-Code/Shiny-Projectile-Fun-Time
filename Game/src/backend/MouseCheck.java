@@ -25,10 +25,10 @@ public class MouseCheck extends MouseAdapter {
                 if (tempObject.getId() == ID.Player) {
                     // Calculate vector of new Projectile
                     double theta = Math.atan2(mouse.getY()- (Game.height/2.0 + tempObject.getH()/2.0), mouse.getX() - (Game.width/2.0 + tempObject.getW()/2.0));
-                    System.out.println(theta);
+                    // System.out.println(theta);
                     double dx =  12.0 * Math.cos(theta);
                     double dy = 12.0 * Math.sin(theta);
-                    System.out.println("dx: " + dx + ", dy: " + dy + "\nX: " + tempObject.getX() + ", Y: " + tempObject.getY() + "\nMouseX: " + mouse.getX() + ", MouseY: " + mouse.getY() + "\nCamX: " + cam.getX() + ", CamY: " + cam.getY());
+                    // System.out.println("dx: " + dx + ", dy: " + dy + "\nX: " + tempObject.getX() + ", Y: " + tempObject.getY() + "\nMouseX: " + mouse.getX() + ", MouseY: " + mouse.getY() + "\nCamX: " + cam.getX() + ", CamY: " + cam.getY());
                     double ratioX = (tempObject.getW()/2)/(Math.abs(dx));
                     double ratioY = (tempObject.getH()/2)/(Math.abs(dy));
                     
@@ -44,7 +44,11 @@ public class MouseCheck extends MouseAdapter {
                         spawnY = dy * ratioY * 1.2 + ((Movable)tempObject).getVelY();
                     }
                     
-                    handler.addObject(new Projectile((int)(tempObject.getX() + tempObject.getW()/2.0 + spawnX), (int)(tempObject.getY() + tempObject.getH()/2.0 + spawnY), 4, 4, dx , dy, 0.2, 15, ID.FriendlyProjectile, handler));
+                    double adjustment = 1;
+                    
+                    // if (dx/((Movable)tempObject).getVelX() > 0 && dy/((Movable)tempObject).getVelY() > 0) adjustment = 3;
+                    // System.out.println("Adjustment: " + adjustment);
+                    handler.addObject(new Projectile((int)(tempObject.getX() + tempObject.getW()/2.0 + spawnX), (int)(tempObject.getY() + tempObject.getH()/2.0 + spawnY), 4, 4, dx, dy, 0.2 * adjustment, 15, ID.FriendlyProjectile, handler));
                     // System.out.println("Bullet Created"); // Diagnostic
                 }
             }

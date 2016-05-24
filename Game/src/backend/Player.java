@@ -3,6 +3,7 @@ package backend;
 import Graphics.Animation;
 import Graphics.Sprite;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -15,16 +16,20 @@ public class Player extends Character {
     private Animation walkLeft;
     private Animation walkRight;
     private Animation stand;
+    private Animation walkBack;
+    private Animation walkForward;
 
     // Live animation
     private Animation animation;
 
     public Player(int x, int y, int w, int h, int health, Handler handler) {
         super(x, y, w, h, 0, 0, health, ID.Player, handler);
-        walkLeft = new Animation(new BufferedImage[]{Sprite.getSprite(0, 1), Sprite.getSprite(2, 1)}, 12);
-        walkRight = new Animation(new BufferedImage[]{Sprite.getSprite(0, 2), Sprite.getSprite(2, 2)}, 12);
-        stand = new Animation(new BufferedImage[]{Sprite.getSprite(1, 0)}, 12);
-
+        walkRight = new Animation(new BufferedImage[]{Sprite.getSprite(2, 1, "SpriteSheet- Wizard_Brown_Blue"), Sprite.getSprite(3, 1, "SpriteSheet- Wizard_Brown_Blue")}, 10);
+        walkLeft = new Animation(new BufferedImage[]{Sprite.getSprite(0, 2, "SpriteSheet- Wizard_Brown_Blue"), Sprite.getSprite(1, 2, "SpriteSheet- Wizard_Brown_Blue")}, 10);
+        stand = new Animation(new BufferedImage[]{Sprite.getSprite(0, 0, "SpriteSheet- Wizard_Brown_Blue")}, 10);
+        walkBack = new Animation(new BufferedImage[]{Sprite.getSprite(0, 1, "SpriteSheet- Wizard_Brown_Blue"), Sprite.getSprite(1, 1, "SpriteSheet- Wizard_Brown_Blue")}, 10);
+        walkForward = new Animation(new BufferedImage[]{Sprite.getSprite(1, 0, "SpriteSheet- Wizard_Brown_Blue"), Sprite.getSprite(2, 0, "SpriteSheet- Wizard_Brown_Blue")}, 10);
+        
         this.animation = stand;
         this.animation.start();
     }
@@ -37,6 +42,8 @@ public class Player extends Character {
     }
 
     public void render(Graphics g) {
+        // Graphics2D g2d = (Graphics2D)g;
+        
         g.drawImage(this.animation.getSprite(), this.x, this.y, null);
         
         this.charHealth.render(g);
@@ -57,7 +64,15 @@ public class Player extends Character {
     public Animation getWalkRight() {
         return walkRight;
     }
-
+    
+    public Animation getWalkBack() {
+        return walkBack;
+    }
+    
+    public Animation getWalkForward() {
+        return walkForward;
+    }
+    
     public Animation getStand() {
         return stand;
     }
