@@ -1,6 +1,7 @@
 package backend;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.Date;
 
 /**
@@ -10,6 +11,8 @@ import java.util.Date;
 public class Projectile extends Movable {
     private final int dmg;
     
+    BufferedImage img;
+    
     // in seconds
     private final double displayTime;
     
@@ -17,7 +20,7 @@ public class Projectile extends Movable {
     private long birthTime;
     private long thisTime;
             
-    public Projectile(int x, int y, int w, int h, double velX, double velY, double displayTime, int dmg, ID id, Handler handler) {
+    public Projectile(int x, int y, int w, int h, double velX, double velY, double displayTime, int dmg, ID id, BufferedImage img, Handler handler) {
         // ID can be ID.FriendlyProjectile, ID.EnemyProjectile, ID.NeutralProjectile
         super(x, y, w, h, velX, velY, id, handler);
         this.displayTime = displayTime;
@@ -25,6 +28,7 @@ public class Projectile extends Movable {
         
         birthTime = (new Date().getTime());
         
+        this.img = img;
     }
 
     public void tick() {
@@ -42,8 +46,8 @@ public class Projectile extends Movable {
     }
 
     public void render(Graphics g) {
-        super.render(g);
-        
+        // super.render(g);
+        g.drawImage(img, x, y, null);
     }
     
     public int getDamage() {

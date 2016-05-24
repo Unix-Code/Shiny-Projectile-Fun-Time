@@ -50,7 +50,7 @@ public class Game extends Canvas implements Runnable {
 //            
 //        }
         this.loadLevelImage("level");
-        handler.addObject(new Player(width / 2, height / 2, 32, 32, 100, handler));
+        handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
         handler.addObject(new Enemy((3 * width) / 4 + 30, 300, 16, 48, 100, 1, handler));
     }
 

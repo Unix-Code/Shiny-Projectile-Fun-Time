@@ -60,6 +60,8 @@ public class Handler {
 
         if (keys[Keys.W.value]) {
             ym = 5;
+            tempPlayer.setAnimation(tempPlayer.getWalkBack());
+            tempPlayer.getAnimation().start();
         }
         else {
             ym = 0;
@@ -67,9 +69,8 @@ public class Handler {
 
         if (keys[Keys.A.value]) {
             xm = 5;
-//                tempPlayer.setAnimation(tempPlayer.getWalkLeft());
-//                tempPlayer.getAnimation().start();
-//            
+                tempPlayer.setAnimation(tempPlayer.getWalkLeft());
+                tempPlayer.getAnimation().start();
         }
         else { 
             xm = 0;
@@ -81,6 +82,8 @@ public class Handler {
         
         if (keys[Keys.S.value]) {
             yp = 5;
+            tempPlayer.setAnimation(tempPlayer.getWalkForward());
+            tempPlayer.getAnimation().start();
         }
         else {
             yp = 0;
@@ -88,9 +91,8 @@ public class Handler {
 
         if (keys[Keys.D.value]) {
             xp = 5;
-//                tempPlayer.setAnimation(tempPlayer.getWalkRight());
-//                tempPlayer.getAnimation().start();
-            
+            tempPlayer.setAnimation(tempPlayer.getWalkRight());
+            tempPlayer.getAnimation().start();
         }
         else {
             xp = 0;
@@ -106,7 +108,19 @@ public class Handler {
 //            tempPlayer.getAnimation().stop();
 //            tempPlayer.getAnimation().reset();
 //        }
-
+        boolean allFalse = true;
+        
+        for (int i = 0; i < keys.length; i++) {
+            boolean key = keys[i];
+            if (key) allFalse = false;
+        }
+        
+        if (allFalse) {
+            tempPlayer.getAnimation().stop();
+            tempPlayer.getAnimation().reset();
+            tempPlayer.setAnimation(tempPlayer.getStand());
+        }
+        
         tempPlayer.setVelX(xp - xm);
         tempPlayer.setVelY(yp - ym);
     }
