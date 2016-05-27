@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author David
+* @author David
  */
 public class Game extends Canvas implements Runnable {
 
@@ -51,7 +51,9 @@ public class Game extends Canvas implements Runnable {
 //        }
         this.loadLevelImage("level");
         handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
-        handler.addObject(new Enemy((3 * width) / 4 + 30, 300, 16, 48, 100, 1, handler));
+        for (int i = 0; i <= 2; i++) {
+            handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1, handler));
+        }
     }
 
     public synchronized void start() {
@@ -109,7 +111,6 @@ public class Game extends Canvas implements Runnable {
             nextRepaintDue = (new Date()).getTime() + 1000 / FPS;
             
         }
-
         stop();
     }
 
