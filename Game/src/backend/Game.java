@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -53,11 +54,13 @@ public class Game extends Canvas implements Runnable {
 //        }
     
         handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
-        this.loadLevelImage("level");
+        
+            this.loadLevelImage("level");
+       
         handler.addObject(handler.objects.remove(0));
-        for (int i = 0; i <= 2; i++) {
+        /*for (int i = 0; i <= 2; i++) {
             handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1, handler));
-        }
+        }*/
     }
 
     public synchronized void start() {
@@ -156,6 +159,7 @@ public class Game extends Canvas implements Runnable {
         g2d.translate(-cam.getX(), -cam.getY()); // end cam
         
         g.dispose();
+        g2d.dispose();
         bs.show();
     }
     
@@ -166,7 +170,8 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int w = img.getWidth()/8, h = img.getHeight()/4;
+        int w = img.getWidth()/8;
+        int h = img.getHeight()/4;
         
         int counter = 0;
         for (int i = 0; i < w; i+=3) {
