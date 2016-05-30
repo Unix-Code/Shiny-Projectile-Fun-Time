@@ -5,7 +5,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,7 +18,6 @@ import javax.imageio.ImageIO;
 * @author David
  */
 public class Game extends Canvas implements Runnable {
-
     public static final int width = 640, height = 480;
     public static final int FPS = 60;
 
@@ -53,8 +51,10 @@ public class Game extends Canvas implements Runnable {
 //            }
 //            
 //        }
-        this.loadLevelImage("level");
+    
         handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
+        this.loadLevelImage("level");
+        handler.addObject(handler.objects.remove(0));
         for (int i = 0; i <= 2; i++) {
             handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1, handler));
         }
@@ -64,6 +64,7 @@ public class Game extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
         running = true;
+        System.out.println("Thread started");
     }
 
     public synchronized void stop() {
@@ -86,6 +87,7 @@ public class Game extends Canvas implements Runnable {
         long nextRepaintDue = 0;
 
         while (running) {
+            System.out.println("Running");
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -164,8 +166,7 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("I got all the way here");
-        int w = img.getWidth(), h = img.getHeight();
+        int w = img.getWidth()/8, h = img.getHeight()/4;
         
         int counter = 0;
         for (int i = 0; i < w; i+=3) {
@@ -174,17 +175,15 @@ public class Game extends Canvas implements Runnable {
                 int centerPixel = img.getRGB(i + 1, j + 1);
                 int red = (tilePixel >> 16) & 0xff, green = (tilePixel >> 8) & 0xff, blue = (tilePixel) & 0xff;
                 this.convertToTile(red, green, blue, i/(int)3, j/(int)3);
-                System.out.println("Tile " + counter + " reached");
+                System.out.println("Tile " + counter + " reached" + "\nRed: " + red + ", Green: " + green + ", Blue: " + blue);
                 counter++;
                 // spawn new Tiles and Characters
             }
         }
-        
-        System.out.println("I made it");
     }
     
     private void convertToTile(int red, int green, int blue, int coordX, int coordY) {
-        TileType[] tiles = {TileType.Grass, TileType.Stone, TileType.Water};
+        TileType[] tiles = {TileType.Grass, TileType.Stone, TileType.Water, TileType.Sand, TileType.Dirt, TileType.Missing, TileType.Ice, TileType.Wood, TileType.SandStone, TileType.Gravel};
         int[] currRGB = {red, green, blue};
         
         for (TileType tile : tiles) {
@@ -192,6 +191,7 @@ public class Game extends Canvas implements Runnable {
                 handler.addObject(tile.getTile(coordX*(Tile.SIZE/* + 1*/), coordY*(Tile.SIZE/* + 1*/), handler));
             }
         }
+        System.out.println("Coverting");
     }
     
     

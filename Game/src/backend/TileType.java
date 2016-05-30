@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
  * @author David
  */
 public enum TileType {
-    Grass(0, 255, 0, 0), Stone(64, 224, 208, 1), Water(0, 0, 255, 2), Sand(241, 218, 12, 3), Dirt(121, 101, 40, 4), Missing(255, 0 , 234, 5), Ice(128, 128, 128, 6), Wood(182, 165, 76, 7), SandStone(128, 0, 128, 8);
+    Grass(0, 255, 0, 0), Stone(64, 224, 208, 1), Water(0, 0, 255, 2), Sand(241, 218, 12, 3), Dirt(121, 101, 40, 4), Missing(255, 0 , 234, 5), Ice(128, 128, 128, 6), Wood(182, 165, 76, 7), SandStone(128, 0, 128, 8), Gravel(0, 0, 52, 9);
     
     private final int red, green, blue;
     private BufferedImage texture;
@@ -54,6 +54,9 @@ public enum TileType {
                 break;
             case 8:
                 file = "sandstone";
+                break;
+            case 9:
+                file = "gravel";
                 break;
         }
         
