@@ -179,6 +179,8 @@ public class Game extends Canvas implements Runnable {
                 // spawn new Tiles and Characters
             }
         }
+        
+        System.out.println("I made it");
     }
     
     private void convertToTile(int red, int green, int blue, int coordX, int coordY) {
