@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,6 +29,9 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Camera cam = new Camera(0, 0);
     // private BufferedImage level; 
+    
+    private int viewX = 0;
+    private int viewY = 0;
     
     public Game() {
         handler = new Handler();        
@@ -123,6 +127,9 @@ public class Game extends Canvas implements Runnable {
         for (int i = 0; i < handler.objects.size(); i++) {
             if (handler.objects.get(i).getId() == ID.Player) {
                 cam.tick((Player) handler.objects.get(i));
+
+                viewX = handler.objects.get(i).getX() - width;
+                viewY = handler.objects.get(i).getY() - height;
             }
         }
     }
@@ -157,16 +164,18 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+        System.out.println("I got all the way here");
         int w = img.getWidth(), h = img.getHeight();
         
+        int counter = 0;
         for (int i = 0; i < w; i+=3) {
             for (int j = 0; j < h; j+=3) {
                 int tilePixel = img.getRGB(i,j);
                 int centerPixel = img.getRGB(i + 1, j + 1);
                 int red = (tilePixel >> 16) & 0xff, green = (tilePixel >> 8) & 0xff, blue = (tilePixel) & 0xff;
                 this.convertToTile(red, green, blue, i/(int)3, j/(int)3);
-                
+                System.out.println("Tile " + counter + " reached");
+                counter++;
                 // spawn new Tiles and Characters
             }
         }
@@ -182,6 +191,7 @@ public class Game extends Canvas implements Runnable {
             }
         }
     }
+    
     
     public static int clamp(int var, int min, int max) {
         return (var >= max) ? var = max : ((var <= min) ? var = min : var);
