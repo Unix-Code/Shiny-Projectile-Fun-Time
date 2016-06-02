@@ -26,11 +26,11 @@ public class Tile extends Obj{
         playerOnTop = false;
         this.handler = handler;
         
-        viewable = false;
+        viewable = true;
     } 
     
     public void tick() {
-        for (int i = 0; i < handler.objects.size(); i++) {
+        /*for (int i = 0; i < handler.objects.size(); i++) {
             Player tempPlayer = null;
             
             if (handler.objects.get(i).getId() == ID.Player) {
@@ -41,7 +41,7 @@ public class Tile extends Obj{
                 
                 playerOnTop = this.getBounds().intersects(tempPlayer.getBounds());
             }
-        }
+        }*/
     }
     
     public void render(Graphics g) {
@@ -57,7 +57,7 @@ public class Tile extends Obj{
             g2d.drawImage(texture, x, y, w, h, null);
             // g2d.draw(this.getBounds());
         }
-        System.out.println("Render Tile");
+        // System.out.println("Render Tile");
     }
     
     public Rectangle getBounds() {

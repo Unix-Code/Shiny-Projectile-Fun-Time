@@ -5,7 +5,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -13,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Map;
 import javax.imageio.ImageIO;
 
 /**
@@ -57,7 +55,7 @@ public class Game extends Canvas implements Runnable {
     
         handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
         
-            this.loadLevelImage("level");
+        this.loadLevelImage("level");
        
         handler.addObject(handler.objects.remove(0));
         /*for (int i = 0; i <= 2; i++) {
@@ -130,7 +128,10 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
+        long start = (new Date()).getTime();
         handler.tick();
+        long end = (new Date()).getTime();
+        System.out.println("Time Spent Ticking: " + (end - start));
         for (int i = 0; i < handler.objects.size(); i++) {
             if (handler.objects.get(i).getId() == ID.Player) {
                 cam.tick((Player) handler.objects.get(i));
@@ -151,17 +152,18 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         Graphics2D g2d = (Graphics2D)g;
         
-        RenderingHints rh = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
-        rh.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED));
-        g2d.setRenderingHints(rh);
+        // RenderingHints rh = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+        // rh.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED));
+        // g2d.setRenderingHints(rh);
         
         g.setColor(Color.black);
         g.fillRect(0, 0, width, height);
 
         g2d.translate(cam.getX(), cam.getY()); // begin cam
-        
-        handler.render((Graphics)g2d);
-
+        long start = (new Date()).getTime();
+        handler.render(/*(Graphics)g2d*/g);
+        long end = (new Date()).getTime();
+        System.out.println("Time Spent Rendering: " + (end - start));
         g2d.translate(-cam.getX(), -cam.getY()); // end cam
         
         g.dispose();
@@ -176,8 +178,8 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int w = img.getWidth()/8;
-        int h = img.getHeight()/4;
+        int w = img.getWidth();
+        int h = img.getHeight();
         
         int counter = 0;
         for (int i = 0; i < w; i+=3) {
