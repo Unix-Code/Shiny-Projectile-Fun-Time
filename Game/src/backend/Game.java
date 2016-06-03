@@ -6,12 +6,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 import javax.imageio.ImageIO;
 
 /**
@@ -149,12 +151,16 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         Graphics2D g2d = (Graphics2D)g;
         
+        RenderingHints rh = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+        rh.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED));
+        g2d.setRenderingHints(rh);
+        
         g.setColor(Color.black);
         g.fillRect(0, 0, width, height);
 
         g2d.translate(cam.getX(), cam.getY()); // begin cam
         
-        handler.render(g);
+        handler.render((Graphics)g2d);
 
         g2d.translate(-cam.getX(), -cam.getY()); // end cam
         
