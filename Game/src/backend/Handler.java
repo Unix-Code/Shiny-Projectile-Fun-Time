@@ -2,7 +2,6 @@ package backend;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
@@ -37,8 +36,6 @@ public class Handler {
                 tempObject.tick();
             }
         }
-        // System.out.println(Arrays.toString(keys)); // Diagnostic
-
     }
 
     public void render(Graphics g) {
@@ -74,10 +71,6 @@ public class Handler {
         }
         else { 
             xm = 0;
-//            tempPlayer.getAnimation().stop();
-//            tempPlayer.getAnimation().reset();
-//            tempPlayer.getAnimation().start();
-//            tempPlayer.setAnimation(tempPlayer.getStand());
         }
         
         if (keys[Keys.S.value]) {
@@ -96,18 +89,7 @@ public class Handler {
         }
         else {
             xp = 0;
-//            tempPlayer.getAnimation().stop();
-//            tempPlayer.getAnimation().reset();
-//            tempPlayer.getAnimation().start();
-//            tempPlayer.setAnimation(tempPlayer.getStand());
         }
-
-//        if (keys[Keys.A.value] && keys[Keys.D.value]) {
-//            xp = 0;
-//            xm = 0;
-//            tempPlayer.getAnimation().stop();
-//            tempPlayer.getAnimation().reset();
-//        }
         boolean allFalse = true;
         
         for (int i = 0; i < keys.length; i++) {

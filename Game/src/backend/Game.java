@@ -38,29 +38,14 @@ public class Game extends Canvas implements Runnable {
         this.addMouseListener(new MouseCheck(handler, cam));
         new Window(width, height, "Shiny Projectile Fun Time", this);
         
-        // level = loadLevelImage( /* image */ );
-        
-        // handler.addObject(new Background(0, 0));
-//        handler.addObject(new Stationary(0, 4 * height / 5, Game.width, 30, handler));
-//        handler.addObject(new Stationary((int) (2.85 * width / 4), 353, 70, 30, handler));
-//        handler.addObject(new Stationary(100, 50, 50, 20, handler));
-//        handler.addObject(new Stationary(3 * width / 4 - 65, 290, 60, 40, handler));
-        
-//        for (int i = 0; i < Game.width; i += Tile.SIZE + 1) {
-//            for (int j = 0; j < Game.height; j += Tile.SIZE + 1) {
-//                handler.addObject(new Tile(i, j, handler));
-//            }
-//            
-//        }
-    
-        handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
-        
         this.loadLevelImage("level");
-       
-        handler.addObject(handler.objects.remove(0));
-        /*for (int i = 0; i <= 2; i++) {
-            handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1, handler));
-        }*/
+
+        handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
+//        
+//        for (int i = 0; i <= 2; i++) {
+//            handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1,handler));
+//        }
+        handler.addObject(new Enemy(width/4, height/4, 59, 42, 100, 1, handler));
     }
 
     public synchronized void start() {
@@ -158,7 +143,7 @@ public class Game extends Canvas implements Runnable {
         
         g.setColor(Color.black);
         g.fillRect(0, 0, width, height);
-
+        
         g2d.translate(cam.getX(), cam.getY()); // begin cam
         long start = (new Date()).getTime();
         handler.render(/*(Graphics)g2d*/g);

@@ -1,5 +1,7 @@
 package backend;
 
+import Graphics.Animation;
+import Graphics.Sprite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -36,7 +38,9 @@ public class Enemy extends Character {
     private int currHealth;
     private int prevHealth;
     
-    public Enemy(int x, int y, int w, int h, int health, int dmg, /*BufferedImage img, */Handler handler) {
+    private Animation animation;
+    
+    public Enemy(int x, int y, int w, int h, int health, int dmg, Handler handler) {
         super(x, y, w, h, 0, 0, health, ID.Enemy, handler);
         startX = x;
         startY = y;
@@ -52,10 +56,15 @@ public class Enemy extends Character {
         
         currHealth = health;
         prevHealth = health;
+        
+        this.animation = new Animation(new BufferedImage[]{Sprite.getSprite(0, 0, "spooder"), Sprite.getSprite(1, 0, "spooder")}, 10);
+        this.animation.start();
     }
     
     public void render(Graphics g) {
-        super.render(g);
+        // super.render(g);
+        g.drawImage(animation.getSprite(), x - 2, y - 11, null);
+        this.charHealth.render(g);
         Graphics2D g2d = (Graphics2D)g;
         g2d.setColor(Color.YELLOW);
         g2d.draw(perimeter);
@@ -63,7 +72,7 @@ public class Enemy extends Character {
     
     public void tick() {
         super.tick();
-        
+        animation.tick();
         currTime = (new Date().getTime());
         if (Math.abs(currTime - shootTime) > 1500 && startX != this.x && startY != this.y ) fire();
         this.watchForPlayer();
