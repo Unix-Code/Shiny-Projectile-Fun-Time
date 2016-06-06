@@ -2,7 +2,6 @@ package backend;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
@@ -10,11 +9,15 @@ import java.util.Arrays;
  */
 public class Handler {
     ArrayList<Obj> objects;
+    ArrayList<Character> deadThings;
+    private Player player;
     boolean[] keys;
     private int xp, xm, yp, ym;
     
     public Handler() {
-        objects = new ArrayList();
+        player = new Player(Game.width / 2, Game.height / 2, 64, 64, 100, this);
+        objects = new ArrayList<>();
+        deadThings = new ArrayList<>();
         keys = new boolean[8];
         for (int i = 0; i < keys.length; i++) {
             keys[i] = false;
@@ -26,36 +29,40 @@ public class Handler {
     }
 
     public void tick() {
+        handleKeyStrokes(player);
+        player.tick();
+        
         for (int i = 0; i < objects.size(); i++) {
-            Obj tempObject = objects.get(i);
-            
-            if (tempObject.getId() == ID.Player) {
-                handleKeyStrokes((Player) tempObject);
-                ((Player)tempObject).tick();
-            }
-            else {
-                tempObject.tick();
-            }
+            Obj object = objects.get(i);
+            object.tick();
         }
-        // System.out.println(Arrays.toString(keys)); // Diagnostic
-
     }
 
     public void render(Graphics g) {
         for (int i = 0; i < objects.size(); i++) {
-            Obj tempObject = objects.get(i);
-            tempObject.render(g);
+            Obj object = objects.get(i);
+            object.render(g);
         }
+        player.render(g);
     }
-
+    
+    public Player getPlayer() {
+        return player;
+    }
+    
     public void addObject(Obj object) {
         objects.add(object);
     }
 
-    public void removeObject(Obj object) {
+    public Obj removeObject(Obj object) {
         objects.remove(object);
+        return object;
     }
-
+    
+    public void addCorpse(Character object) {
+        deadThings.add(object);
+    }
+    
     private void handleKeyStrokes(Player tempPlayer) {
 
         if (keys[Keys.W.value]) {
@@ -74,10 +81,6 @@ public class Handler {
         }
         else { 
             xm = 0;
-//            tempPlayer.getAnimation().stop();
-//            tempPlayer.getAnimation().reset();
-//            tempPlayer.getAnimation().start();
-//            tempPlayer.setAnimation(tempPlayer.getStand());
         }
         
         if (keys[Keys.S.value]) {
@@ -96,18 +99,7 @@ public class Handler {
         }
         else {
             xp = 0;
-//            tempPlayer.getAnimation().stop();
-//            tempPlayer.getAnimation().reset();
-//            tempPlayer.getAnimation().start();
-//            tempPlayer.setAnimation(tempPlayer.getStand());
         }
-
-//        if (keys[Keys.A.value] && keys[Keys.D.value]) {
-//            xp = 0;
-//            xm = 0;
-//            tempPlayer.getAnimation().stop();
-//            tempPlayer.getAnimation().reset();
-//        }
         boolean allFalse = true;
         
         for (int i = 0; i < keys.length; i++) {

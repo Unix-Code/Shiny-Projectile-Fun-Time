@@ -3,7 +3,6 @@ package backend;
 import Graphics.Animation;
 import Graphics.Sprite;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -38,7 +37,6 @@ public class Player extends Character {
         super.tick();
         this.detectCollision();
         animation.tick();
-        // System.out.println("Animation: " + ((animation.equals(walkLeft)) ? "Left" : ((animation.equals(walkRight)) ? "Right" : ((animation.equals(stand)) ? "Stand" : "IDK"))));
     }
 
     public void render(Graphics g) {
@@ -90,12 +88,6 @@ public class Player extends Character {
                     if (this.getHealth() > 0) {
                         this.setHealth(this.getHealth() - tempEnemy.getDamage());
                     }
-                    /*
-                    else {
-                        handler.removeObject(this);
-                        System.out.println("POOF... THERE WE GO");
-                    }
-                     */
                 }
             }
         }

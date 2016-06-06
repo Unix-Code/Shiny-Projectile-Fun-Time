@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,7 +19,6 @@ import javax.imageio.ImageIO;
 * @author David
  */
 public class Game extends Canvas implements Runnable {
-
     public static final int width = 640, height = 480;
     public static final int FPS = 60;
 
@@ -29,37 +29,32 @@ public class Game extends Canvas implements Runnable {
     private Camera cam = new Camera(0, 0);
     // private BufferedImage level; 
     
+    private int viewX = 0;
+    private int viewY = 0;
+    
     public Game() {
         handler = new Handler();        
         this.addKeyListener(new KeyCheck(handler));
         this.addMouseListener(new MouseCheck(handler, cam));
         new Window(width, height, "Shiny Projectile Fun Time", this);
         
-        // level = loadLevelImage( /* image */ );
-        
-        // handler.addObject(new Background(0, 0));
-//        handler.addObject(new Stationary(0, 4 * height / 5, Game.width, 30, handler));
-//        handler.addObject(new Stationary((int) (2.85 * width / 4), 353, 70, 30, handler));
-//        handler.addObject(new Stationary(100, 50, 50, 20, handler));
-//        handler.addObject(new Stationary(3 * width / 4 - 65, 290, 60, 40, handler));
-        
-//        for (int i = 0; i < Game.width; i += Tile.SIZE + 1) {
-//            for (int j = 0; j < Game.height; j += Tile.SIZE + 1) {
-//                handler.addObject(new Tile(i, j, handler));
-//            }
-//            
-//        }
         this.loadLevelImage("level");
-        handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
-        for (int i = 0; i <= 2; i++) {
-            handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1, handler));
-        }
+
+        handler.addObject(new UI(handler));
+        // handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
+        
+//        for (int i = 0; i <= 2; i++) {
+//            handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1,handler));
+//        }
+        
+        handler.addObject(new Enemy(width/4, height/4, 59, 42, 100, 1, handler));
     }
 
     public synchronized void start() {
         thread = new Thread(this);
         thread.start();
         running = true;
+        System.out.println("Thread started");
     }
 
     public synchronized void stop() {
@@ -82,6 +77,7 @@ public class Game extends Canvas implements Runnable {
         long nextRepaintDue = 0;
 
         while (running) {
+            System.out.println("Running");
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -119,12 +115,17 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
+        long start = (new Date()).getTime();
         handler.tick();
-        for (int i = 0; i < handler.objects.size(); i++) {
-            if (handler.objects.get(i).getId() == ID.Player) {
-                cam.tick((Player) handler.objects.get(i));
-            }
-        }
+        long end = (new Date()).getTime();
+        // System.out.println("Time Spent Ticking: " + (end - start));
+        
+        cam.tick(handler.getPlayer());
+
+        viewX = handler.getPlayer().getX() - width;
+        viewY = handler.getPlayer().getY() - height;
+
+        
     }
 
     private void render() {
@@ -137,16 +138,22 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         Graphics2D g2d = (Graphics2D)g;
         
+        // RenderingHints rh = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+        // rh.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED));
+        // g2d.setRenderingHints(rh);
+        
         g.setColor(Color.black);
         g.fillRect(0, 0, width, height);
-
-        g2d.translate(cam.getX(), cam.getY()); // begin cam
         
-        handler.render(g);
-
+        g2d.translate(cam.getX(), cam.getY()); // begin cam
+        long start = (new Date()).getTime();
+        handler.render(/*(Graphics)g2d*/g);
+        long end = (new Date()).getTime();
+        // System.out.println("Time Spent Rendering: " + (end - start));
         g2d.translate(-cam.getX(), -cam.getY()); // end cam
         
         g.dispose();
+        g2d.dispose();
         bs.show();
     }
     
@@ -157,23 +164,25 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        int w = img.getWidth();
+        int h = img.getHeight();
         
-        int w = img.getWidth(), h = img.getHeight();
-        
+        int counter = 0;
         for (int i = 0; i < w; i+=3) {
             for (int j = 0; j < h; j+=3) {
                 int tilePixel = img.getRGB(i,j);
                 int centerPixel = img.getRGB(i + 1, j + 1);
                 int red = (tilePixel >> 16) & 0xff, green = (tilePixel >> 8) & 0xff, blue = (tilePixel) & 0xff;
                 this.convertToTile(red, green, blue, i/(int)3, j/(int)3);
-                
+                System.out.println("Tile " + counter + " reached" + "\nRed: " + red + ", Green: " + green + ", Blue: " + blue);
+                counter++;
                 // spawn new Tiles and Characters
             }
         }
     }
     
     private void convertToTile(int red, int green, int blue, int coordX, int coordY) {
-        TileType[] tiles = {TileType.Grass, TileType.Stone, TileType.Water};
+        TileType[] tiles = {TileType.Grass, TileType.Stone, TileType.Water, TileType.Sand, TileType.Dirt, TileType.Missing, TileType.Ice, TileType.Wood, TileType.SandStone, TileType.Gravel};
         int[] currRGB = {red, green, blue};
         
         for (TileType tile : tiles) {
@@ -181,7 +190,9 @@ public class Game extends Canvas implements Runnable {
                 handler.addObject(tile.getTile(coordX*(Tile.SIZE/* + 1*/), coordY*(Tile.SIZE/* + 1*/), handler));
             }
         }
+        System.out.println("Coverting");
     }
+    
     
     public static int clamp(int var, int min, int max) {
         return (var >= max) ? var = max : ((var <= min) ? var = min : var);

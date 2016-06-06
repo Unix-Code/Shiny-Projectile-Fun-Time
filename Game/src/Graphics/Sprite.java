@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
  */
 public class Sprite {
 
-    private static BufferedImage spriteSheet;
     private static final int TILE_SIZE = 64;
 
     public static BufferedImage loadSprite(String file) {
@@ -28,12 +27,8 @@ public class Sprite {
     }
 
     public static BufferedImage getSprite(int xGrid, int yGrid, String spritesheet) {
-
-        if (spriteSheet == null) {
-            spriteSheet = loadSprite(spritesheet);
-        }
-
-        return spriteSheet.getSubimage(xGrid * TILE_SIZE, yGrid * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        
+        return loadSprite(spritesheet).getSubimage(xGrid * TILE_SIZE, yGrid * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
     
     public static BufferedImage[] interpretSpriteSheet(int width, int height, int numSprites, String spritesheet) {
