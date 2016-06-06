@@ -1,5 +1,6 @@
 package backend;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /**
@@ -19,6 +20,7 @@ public class XPBar extends ValueBar {
     }
 
     public void render(Graphics g) {
+        g.setColor(Color.BLUE);
         g.fillRect(x, y, w, h);
     }
 
@@ -29,6 +31,7 @@ public class XPBar extends ValueBar {
             exp += deadObject.getXPValue();
         }
         this.setCurrValue(exp);
+        System.out.println("Current XP: " + this.getCurrValue());
     }
             
 }

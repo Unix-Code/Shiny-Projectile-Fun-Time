@@ -10,10 +10,12 @@ import java.util.ArrayList;
 public class Handler {
     ArrayList<Obj> objects;
     ArrayList<Character> deadThings;
+    private Player player;
     boolean[] keys;
     private int xp, xm, yp, ym;
     
     public Handler() {
+        player = new Player(Game.width / 2, Game.height / 2, 64, 64, 100, this);
         objects = new ArrayList<>();
         deadThings = new ArrayList<>();
         keys = new boolean[8];
@@ -27,26 +29,27 @@ public class Handler {
     }
 
     public void tick() {
+        handleKeyStrokes(player);
+        player.tick();
+        
         for (int i = 0; i < objects.size(); i++) {
-            Obj tempObject = objects.get(i);
-            
-            if (tempObject.getId() == ID.Player) {
-                handleKeyStrokes((Player) tempObject);
-                ((Player)tempObject).tick();
-            }
-            else {
-                tempObject.tick();
-            }
+            Obj object = objects.get(i);
+            object.tick();
         }
     }
 
     public void render(Graphics g) {
         for (int i = 0; i < objects.size(); i++) {
-            Obj tempObject = objects.get(i);
-            tempObject.render(g);
+            Obj object = objects.get(i);
+            object.render(g);
         }
+        player.render(g);
     }
-
+    
+    public Player getPlayer() {
+        return player;
+    }
+    
     public void addObject(Obj object) {
         objects.add(object);
     }

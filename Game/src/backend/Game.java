@@ -41,7 +41,7 @@ public class Game extends Canvas implements Runnable {
         this.loadLevelImage("level");
 
         handler.addObject(new UI(handler));
-        handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
+        // handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
         
 //        for (int i = 0; i <= 2; i++) {
 //            handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1,handler));
@@ -118,15 +118,14 @@ public class Game extends Canvas implements Runnable {
         long start = (new Date()).getTime();
         handler.tick();
         long end = (new Date()).getTime();
-        System.out.println("Time Spent Ticking: " + (end - start));
-        for (int i = 0; i < handler.objects.size(); i++) {
-            if (handler.objects.get(i).getId() == ID.Player) {
-                cam.tick((Player) handler.objects.get(i));
+        // System.out.println("Time Spent Ticking: " + (end - start));
+        
+        cam.tick(handler.getPlayer());
 
-                viewX = handler.objects.get(i).getX() - width;
-                viewY = handler.objects.get(i).getY() - height;
-            }
-        }
+        viewX = handler.getPlayer().getX() - width;
+        viewY = handler.getPlayer().getY() - height;
+
+        
     }
 
     private void render() {
@@ -150,7 +149,7 @@ public class Game extends Canvas implements Runnable {
         long start = (new Date()).getTime();
         handler.render(/*(Graphics)g2d*/g);
         long end = (new Date()).getTime();
-        System.out.println("Time Spent Rendering: " + (end - start));
+        // System.out.println("Time Spent Rendering: " + (end - start));
         g2d.translate(-cam.getX(), -cam.getY()); // end cam
         
         g.dispose();

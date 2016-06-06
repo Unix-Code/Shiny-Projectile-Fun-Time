@@ -9,7 +9,7 @@ public abstract class ValueBar extends Obj {
     private double maxValue;
     
     public ValueBar(double currValue, double maxValue) {
-        super(3*(Game.width/5), 50, 2*(Game.width/5), 10, ID.UI);
+        super(3*(Game.width/5), 50, (int)currValue, 10, ID.UI);
     }
 
     public double getCurrValue() {
