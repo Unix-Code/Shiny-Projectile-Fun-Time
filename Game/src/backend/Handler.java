@@ -9,11 +9,13 @@ import java.util.ArrayList;
  */
 public class Handler {
     ArrayList<Obj> objects;
+    ArrayList<Character> deadThings;
     boolean[] keys;
     private int xp, xm, yp, ym;
     
     public Handler() {
-        objects = new ArrayList();
+        objects = new ArrayList<>();
+        deadThings = new ArrayList<>();
         keys = new boolean[8];
         for (int i = 0; i < keys.length; i++) {
             keys[i] = false;
@@ -49,10 +51,15 @@ public class Handler {
         objects.add(object);
     }
 
-    public void removeObject(Obj object) {
+    public Obj removeObject(Obj object) {
         objects.remove(object);
+        return object;
     }
-
+    
+    public void addCorpse(Character object) {
+        deadThings.add(object);
+    }
+    
     private void handleKeyStrokes(Player tempPlayer) {
 
         if (keys[Keys.W.value]) {

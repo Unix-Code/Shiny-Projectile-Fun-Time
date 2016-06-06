@@ -9,6 +9,7 @@ import java.awt.Graphics;
 public class Character extends Movable {
     
     protected HealthBar charHealth;
+    private int XPValue;
     
     public Character() {
         super();
@@ -24,6 +25,7 @@ public class Character extends Movable {
     public Character(int x, int y, int w, int h, double velX, double velY, int health,  ID id, Handler handler) {
         super(x, y, w, h, velX, velY, id, handler);
         charHealth = new HealthBar(health, x, y, w, 10, this);
+        XPValue = 10; // Diagnostic
     }
 
     public void render(Graphics g) {
@@ -37,7 +39,7 @@ public class Character extends Movable {
         charHealth.tick();
         this.detectProjectiles();
         if (!(this.getHealth() > 0)) {
-            handler.removeObject(this);
+            handler.addCorpse((Character) handler.removeObject(this));
         }
     }
     
@@ -51,6 +53,10 @@ public class Character extends Movable {
 
     public void setHealth(int health) {
         charHealth.setHealth(health);
+    }
+    
+    public int getXPValue() {
+        return XPValue;
     }
     
     private void detectProjectiles() {
