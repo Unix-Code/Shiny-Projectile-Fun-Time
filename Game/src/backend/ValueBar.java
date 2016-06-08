@@ -24,6 +24,10 @@ public abstract class ValueBar extends Obj {
         return maxValue;
     }
     
+    public void setMaxValue(double maxValue) {
+        this.maxValue = maxValue;
+    }
+    
     abstract void calcValue();
     
 }

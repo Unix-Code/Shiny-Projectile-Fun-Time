@@ -21,7 +21,9 @@ public class XPBar extends ValueBar {
 
     public void render(Graphics g) {
         g.setColor(Color.BLUE);
-        g.fillRect(x, y, w, h);
+        g.fillRect(handler.getPlayer().getX() + 50, handler.getPlayer().getY(), w, h);
+        g.setColor(Color.DARK_GRAY);
+        g.drawRect(handler.getPlayer().getX() + 49, handler.getPlayer().getY() - 1, w + 1, h + 1);
     }
 
     public void calcValue() {

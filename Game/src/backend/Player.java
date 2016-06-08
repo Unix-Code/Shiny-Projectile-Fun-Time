@@ -20,6 +20,8 @@ public class Player extends Character {
 
     // Live animation
     private Animation animation;
+    
+    private XPBar xpBar;
 
     public Player(int x, int y, int w, int h, int health, Handler handler) {
         super(x, y, w, h, 0, 0, health, ID.Player, handler);
@@ -31,12 +33,15 @@ public class Player extends Character {
         
         this.animation = stand;
         this.animation.start();
+        
+        xpBar = new XPBar(0, 100, handler);
     }
 
     public void tick() {
         super.tick();
         this.detectCollision();
         animation.tick();
+        xpBar.tick();
     }
 
     public void render(Graphics g) {
@@ -45,6 +50,7 @@ public class Player extends Character {
         g.drawImage(this.animation.getSprite(), this.x, this.y, null);
         
         this.charHealth.render(g);
+        this.xpBar.render(g);
     }
 
     public Animation getAnimation() {
