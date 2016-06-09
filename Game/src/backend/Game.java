@@ -36,16 +36,16 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();        
         this.addKeyListener(new KeyCheck(handler));
         this.addMouseListener(new MouseCheck(handler, cam));
-        new Window(width, height, "Shiny Projectile Fun Time", this);
+        new Window(width + (2 * Game.width/5), height, "Shiny Projectile Fun Time", this);
         
         this.loadLevelImage("level");
 
-        handler.addObject(new UI(handler));
+        
         // handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
         
-//        for (int i = 0; i <= 2; i++) {
-//            handler.addObject(new Enemy((3 * width) / 4 + 30 + 32*i, 300 + 96 * i, 16, 48, 100, 1,handler));
-//        }
+        for (int i = 0; i <= 4; i++) {
+            handler.addObject(new Enemy((3 * width) / 4 + 30 + 300*i, 300 + 96 * i + 2, 59, 42, 100, 1,handler));
+        }
         
         handler.addObject(new Enemy(width/4, height/4, 59, 42, 100, 1, handler));
     }
@@ -195,6 +195,10 @@ public class Game extends Canvas implements Runnable {
     
     
     public static int clamp(int var, int min, int max) {
+        return (var >= max) ? var = max : ((var <= min) ? var = min : var);
+    }
+    
+    public static double clamp(double var, double min, double max) {
         return (var >= max) ? var = max : ((var <= min) ? var = min : var);
     }
 

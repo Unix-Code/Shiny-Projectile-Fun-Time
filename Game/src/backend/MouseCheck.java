@@ -63,7 +63,7 @@ public class MouseCheck extends MouseAdapter {
 
             // if (dx/((Movable)tempObject).getVelX() > 0 && dy/((Movable)tempObject).getVelY() > 0) adjustment = 3;
             // System.out.println("Adjustment: " + adjustment);
-            handler.addObject(new Projectile((int) (tempObject.getX() + tempObject.getW() / 2.0 + spawnX), (int) (tempObject.getY() + tempObject.getH() / 2.0 + spawnY), randProjectile.getSizeX(), randProjectile.getSizeY(), dx, dy, 0.3 * adjustment, 15, ID.FriendlyProjectile, projectileImg, handler));
+            handler.addObject(new Projectile((int) (tempObject.getX() + tempObject.getW() / 2.0 + spawnX), (int) (tempObject.getY() + tempObject.getH() / 2.0 + spawnY), randProjectile.getSizeX(), randProjectile.getSizeY(), dx, dy, 0.3 * adjustment, handler.getPlayer().getDmg(), ID.FriendlyProjectile, projectileImg, handler));
             // System.out.println("Bullet Created"); // Diagnostic
         }
     }

@@ -13,9 +13,12 @@ public class UI extends Obj {
     
     public UI(Handler handler) {
         super(3*Game.width/5, 0, 2*Game.width/5, Game.height, ID.UI);
+        this.handler = handler;
     }
     
     public void tick() {
+        this.setX(handler.getPlayer().getX() - (Game.width/2) + Game.width);
+        this.setY(handler.getPlayer().getY() - (Game.width/3 + 27));
     }
 
     public void render(Graphics g) {

@@ -9,8 +9,9 @@ import java.util.ArrayList;
  */
 public class Handler {
     ArrayList<Obj> objects;
-    ArrayList<Character> deadThings;
+    ArrayList<Enemy> deadThings;
     private Player player;
+    private UI GUI;
     boolean[] keys;
     private int xp, xm, yp, ym;
     
@@ -19,6 +20,7 @@ public class Handler {
         objects = new ArrayList<>();
         deadThings = new ArrayList<>();
         keys = new boolean[8];
+        GUI = new UI(this);
         for (int i = 0; i < keys.length; i++) {
             keys[i] = false;
         }
@@ -30,8 +32,8 @@ public class Handler {
 
     public void tick() {
         handleKeyStrokes(player);
-        player.tick();
-        
+        if (player.isNotBoosted()) player.tick();
+        GUI.tick();
         for (int i = 0; i < objects.size(); i++) {
             Obj object = objects.get(i);
             object.tick();
@@ -43,13 +45,18 @@ public class Handler {
             Obj object = objects.get(i);
             object.render(g);
         }
-        player.render(g);
+        GUI.render(g);
+        if (player.isNotBoosted()) player.render(g);
     }
     
     public Player getPlayer() {
         return player;
     }
-    
+
+    public UI getUI() {
+        return GUI;
+    }
+
     public void addObject(Obj object) {
         objects.add(object);
     }
@@ -59,14 +66,14 @@ public class Handler {
         return object;
     }
     
-    public void addCorpse(Character object) {
+    public void addCorpse(Enemy object) {
         deadThings.add(object);
     }
     
     private void handleKeyStrokes(Player tempPlayer) {
 
         if (keys[Keys.W.value]) {
-            ym = 5;
+            ym = tempPlayer.getSpeed();
             tempPlayer.setAnimation(tempPlayer.getWalkBack());
             tempPlayer.getAnimation().start();
         }
@@ -75,7 +82,7 @@ public class Handler {
         }
 
         if (keys[Keys.A.value]) {
-            xm = 5;
+            xm = tempPlayer.getSpeed();
                 tempPlayer.setAnimation(tempPlayer.getWalkLeft());
                 tempPlayer.getAnimation().start();
         }
@@ -84,7 +91,7 @@ public class Handler {
         }
         
         if (keys[Keys.S.value]) {
-            yp = 5;
+            yp = tempPlayer.getSpeed();
             tempPlayer.setAnimation(tempPlayer.getWalkForward());
             tempPlayer.getAnimation().start();
         }
@@ -93,7 +100,7 @@ public class Handler {
         }
 
         if (keys[Keys.D.value]) {
-            xp = 5;
+            xp = tempPlayer.getSpeed();
             tempPlayer.setAnimation(tempPlayer.getWalkRight());
             tempPlayer.getAnimation().start();
         }

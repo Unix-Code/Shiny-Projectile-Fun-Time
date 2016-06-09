@@ -26,6 +26,8 @@ public class Enemy extends Character {
     // in seconds
     private final int followTime = 3;
 
+    private int XPValue;
+    
     // For Disappearing
     private long startTime;
     private long thisTime;
@@ -46,7 +48,9 @@ public class Enemy extends Character {
         startX = x;
         startY = y;
         this.dmg = dmg;
-
+        
+        this.XPValue = 55;
+        
         perimeter = new Rectangle(x - 500, y - 500, this.w + 1000, this.h + 1000);
         startTime = (new Date().getTime());
         thisTime = startTime + followTime * 1000 + 1;
@@ -135,6 +139,10 @@ public class Enemy extends Character {
 
     public int getDamage() {
         return dmg;
+    }
+    
+    public int getXPValue() {
+        return XPValue;
     }
 
     public void watchForPlayer() {

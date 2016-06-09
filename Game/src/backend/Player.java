@@ -10,7 +10,9 @@ import java.awt.image.BufferedImage;
  * @author David
  */
 public class Player extends Character {
-
+    
+    private boolean boosted;
+    
     // Animation states
     private Animation walkLeft;
     private Animation walkRight;
@@ -22,6 +24,10 @@ public class Player extends Character {
     private Animation animation;
     
     private XPBar xpBar;
+    
+    private int dmg;
+    private int speed;
+    private int defense;
 
     public Player(int x, int y, int w, int h, int health, Handler handler) {
         super(x, y, w, h, 0, 0, health, ID.Player, handler);
@@ -35,6 +41,12 @@ public class Player extends Character {
         this.animation.start();
         
         xpBar = new XPBar(0, 100, handler);
+        
+        dmg = 10;
+        speed = 5;
+        defense = 0;
+        
+        boosted = false;
     }
 
     public void tick() {
@@ -42,6 +54,10 @@ public class Player extends Character {
         this.detectCollision();
         animation.tick();
         xpBar.tick();
+        
+        dmg = 10 + (xpBar.getLevel() - 1);
+        speed = 5;
+        defense = 0 + (xpBar.getLevel() - 1);
     }
 
     public void render(Graphics g) {
@@ -81,6 +97,37 @@ public class Player extends Character {
         return stand;
     }
 
+    public boolean isNotBoosted() {
+        return !boosted;
+    }
+    public void tilt() {
+        boosted = true;
+    }
+    
+    public int getDmg() {
+        return dmg;
+    }
+
+    public void setDmg(int dmg) {
+        this.dmg = dmg;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
     private void detectCollision() {
         for (int i = 0; i < handler.objects.size(); i++) {
             Enemy tempEnemy = null;
@@ -92,7 +139,7 @@ public class Player extends Character {
             if (tempEnemy != null) {
                 if (this.getBounds().intersects(tempEnemy.getBounds())) {
                     if (this.getHealth() > 0) {
-                        this.setHealth(this.getHealth() - tempEnemy.getDamage());
+                        this.setHealth(this.getHealth() - (tempEnemy.getDamage() - this.defense));
                     }
                 }
             }

@@ -9,7 +9,6 @@ import java.awt.Graphics;
 public class Character extends Movable {
     
     protected HealthBar charHealth;
-    private int XPValue;
     
     public Character() {
         super();
@@ -25,7 +24,6 @@ public class Character extends Movable {
     public Character(int x, int y, int w, int h, double velX, double velY, int health,  ID id, Handler handler) {
         super(x, y, w, h, velX, velY, id, handler);
         charHealth = new HealthBar(health, x, y, w, 10, this);
-        XPValue = 10; // Diagnostic
     }
 
     public void render(Graphics g) {
@@ -39,7 +37,13 @@ public class Character extends Movable {
         charHealth.tick();
         this.detectProjectiles();
         if (!(this.getHealth() > 0)) {
-            handler.addCorpse((Character) handler.removeObject(this));
+            if (this.getId() != ID.Player) {
+                handler.addCorpse((Enemy) handler.removeObject(this));
+            }
+            else {
+                handler.removeObject(this);
+                ((Player)this).tilt();
+            }
         }
     }
     
@@ -55,10 +59,6 @@ public class Character extends Movable {
         charHealth.setHealth(health);
     }
     
-    public int getXPValue() {
-        return XPValue;
-    }
-    
     private void detectProjectiles() {
         for (int i = 0; i < handler.objects.size(); i++) {
             Projectile tempProjectile = null;
@@ -70,7 +70,8 @@ public class Character extends Movable {
                          (this.getId() == ID.Enemy && tempProjectile.getId() != ID.EnemyProjectile)) { 
                     if (this.getBounds().intersects(tempProjectile.getBounds())) {
                         if (this.getHealth() > 0) {
-                            this.setHealth(this.getHealth() - tempProjectile.getDamage());
+                            int damage = tempProjectile.getDamage() + ((this.getId() == ID.Player) ?  -1 * ((Player)this).getDefense() : 0);
+                            this.setHealth(this.getHealth() - damage);
                         }
                         /*
                         else {
