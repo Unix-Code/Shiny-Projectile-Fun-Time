@@ -31,6 +31,14 @@ public class Sprite {
         return loadSprite(spritesheet).getSubimage(xGrid * TILE_SIZE, yGrid * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
     
+    public static BufferedImage getSprite(int xGrid, int yGrid, String spritesheet, int tileSize) {
+        return loadSprite(spritesheet).getSubimage(xGrid * tileSize, yGrid * tileSize, tileSize, tileSize);
+    }
+    
+    public static BufferedImage getSprite(int xGrid, int yGrid, String spritesheet, int tileSizeX, int tileSizeY) {
+        return loadSprite(spritesheet).getSubimage(xGrid * tileSizeX, yGrid * tileSizeY, tileSizeX, tileSizeY);
+    }
+    
     public static BufferedImage[] interpretSpriteSheet(int width, int height, int numSprites, String spritesheet) {
         BufferedImage[] images = new BufferedImage[numSprites];
         
