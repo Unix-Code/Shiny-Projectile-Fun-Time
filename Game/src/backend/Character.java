@@ -38,7 +38,16 @@ public class Character extends Movable {
         this.detectProjectiles();
         if (!(this.getHealth() > 0)) {
             if (this.getId() != ID.Player) {
-                handler.addObject(new ItemDrop(x, y, (int)(Math.random() * 3) + 1, handler));
+                int rand = ((int)(Math.random() * 100) + 1);
+                boolean drop = rand <= 30;
+                System.out.println("Rand Drop: " + rand);
+                if (drop) {
+                    int randTier = 1;
+                    if (rand == 1) randTier = 3;
+                    if (rand > 1 && rand <= 10) randTier = 2;
+                    handler.addObject(new ItemDrop(x, y, randTier, handler));
+                    
+                }
                 handler.addCorpse((Enemy) handler.removeObject(this));
             }
             else {

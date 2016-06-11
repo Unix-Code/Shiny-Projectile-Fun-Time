@@ -43,7 +43,7 @@ public class Game extends Canvas implements Runnable {
         
         // handler.addObject(new Player(width / 2, height / 2, 64, 64, 100, handler));
         
-        for (int i = 0; i <= 8; i++) {
+        for (int i = 0; i <= 10; i++) {
             handler.addObject(new Enemy((3 * width) / 4 + 30 + 400*i, 300 + 96 * i + 2, 59, 42, 100, 1,handler));
         }
         
