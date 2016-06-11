@@ -51,7 +51,7 @@ public class Player extends Character {
 
     public void tick() {
         super.tick();
-        this.detectCollision();
+//        this.detectCollision();
         animation.tick();
         xpBar.tick();
         
@@ -128,21 +128,21 @@ public class Player extends Character {
         this.defense = defense;
     }
 
-    private void detectCollision() {
-        for (int i = 0; i < handler.objects.size(); i++) {
-            Enemy tempEnemy = null;
-
-            if (handler.objects.get(i).getId() == ID.Enemy) {
-                tempEnemy = (Enemy) handler.objects.get(i);
-            }
-
-            if (tempEnemy != null) {
-                if (this.getBounds().intersects(tempEnemy.getBounds())) {
-                    if (this.getHealth() > 0) {
-                        this.setHealth(this.getHealth() - (tempEnemy.getDamage() - this.defense));
-                    }
-                }
-            }
-        }
-    }
+//    private void detectCollision() {
+//        for (int i = 0; i < handler.objects.size(); i++) {
+//            Enemy tempEnemy = null;
+//
+//            if (handler.objects.get(i).getId() == ID.Enemy) {
+//                tempEnemy = (Enemy) handler.objects.get(i);
+//            }
+//
+//            if (tempEnemy != null) {
+//                if (this.getBounds().intersects(tempEnemy.getBounds())) {
+//                    if (this.getHealth() > 0) {
+//                        this.setHealth(this.getHealth() - (tempEnemy.getDamage() - this.defense));
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

@@ -36,7 +36,7 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();        
         this.addKeyListener(new KeyCheck(handler));
         this.addMouseListener(new MouseCheck(handler, cam));
-        new Window(width + (2 * Game.width/5), height, "Shiny Projectile Fun Time", this);
+        new Window(width + 156, height, "Shiny Projectile Fun Time", this);
         
         this.loadLevelImage("level");
 
@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
         running = true;
-        System.out.println("Thread started");
+        // System.out.println("Thread started");
     }
 
     public synchronized void stop() {
@@ -77,7 +77,7 @@ public class Game extends Canvas implements Runnable {
         long nextRepaintDue = 0;
 
         while (running) {
-            System.out.println("Running");
+            // System.out.println("Running");
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -118,7 +118,7 @@ public class Game extends Canvas implements Runnable {
         long start = (new Date()).getTime();
         handler.tick();
         long end = (new Date()).getTime();
-        // System.out.println("Time Spent Ticking: " + (end - start));
+        System.out.println("Time Spent Ticking: " + (end - start));
         
         cam.tick(handler.getPlayer());
 
@@ -149,7 +149,7 @@ public class Game extends Canvas implements Runnable {
         long start = (new Date()).getTime();
         handler.render(/*(Graphics)g2d*/g);
         long end = (new Date()).getTime();
-        // System.out.println("Time Spent Rendering: " + (end - start));
+        System.out.println("Time Spent Rendering: " + (end - start));
         g2d.translate(-cam.getX(), -cam.getY()); // end cam
         
         g.dispose();
