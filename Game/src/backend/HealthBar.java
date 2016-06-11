@@ -64,7 +64,7 @@ public class HealthBar extends Obj{
     public void render(Graphics g) {
         if (owner.getId() == ID.Player) {
             g.drawImage(emptyBar, x, y, null);
-            if (fill.getWidth() * ((double)health/fullHealth) > 0) g.drawImage(fill.getSubimage(0, 0, (int) (fill.getWidth() * ((double)health/fullHealth)), fill.getHeight()), x + 8, y, null);
+            if ((int)(fill.getWidth() * ((double)health/fullHealth)) > 0) g.drawImage(fill.getSubimage(0, 0, (int) (fill.getWidth() * ((double)health/fullHealth)), fill.getHeight()), x + 8, y, null);
         }
         else {
             if (health == lastHealth) {
