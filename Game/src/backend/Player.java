@@ -145,4 +145,25 @@ public class Player extends Character {
 //            }
 //        }
 //    }
+
+    public boolean pickUp(Item droppedItem) {
+        boolean pickUp = true;
+        for (int i = handler.items.size() -1; i >= 0; i--) {
+            Item item = handler.items.get(i);
+            if (item.getType() == droppedItem.getType()) {
+                if (item.getTier() >= droppedItem.getTier()) {
+                    pickUp = false;
+                }
+                
+                if (droppedItem.getTier() > item.getTier()) {
+                    handler.items.remove(i);
+                }
+            }
+        }
+        
+        
+        if (pickUp) System.out.println("Picked Up: T" + droppedItem.getTier() + " " + droppedItem.getType());
+        
+        return pickUp;
+    }
 }

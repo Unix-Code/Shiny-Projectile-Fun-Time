@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Handler {
     ArrayList<Obj> objects;
     ArrayList<Enemy> deadThings;
+    ArrayList<Item> items;
     private Player player;
     private UI GUI;
     boolean[] keys;
@@ -19,6 +20,7 @@ public class Handler {
         player = new Player(Game.width / 2, Game.height / 2, 64, 64, 100, this);
         objects = new ArrayList<>();
         deadThings = new ArrayList<>();
+        items = new ArrayList<>();
         keys = new boolean[8];
         GUI = new UI(this);
         for (int i = 0; i < keys.length; i++) {
@@ -33,6 +35,13 @@ public class Handler {
     public void tick() {
         handleKeyStrokes(player);
         if (player.isNotBoosted()) player.tick();
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            item.tick();
+
+            // System.out.println("I see Item: T" + item.getTier() + " " + item.getType());
+        }
+        // System.out.println("\n");
         GUI.tick();
         for (int i = 0; i < objects.size(); i++) {
             Obj object = objects.get(i);
@@ -46,6 +55,10 @@ public class Handler {
             object.render(g);
         }
         GUI.render(g);
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            item.render(g);
+        }
         if (player.isNotBoosted()) player.render(g);
     }
     
@@ -68,6 +81,10 @@ public class Handler {
     
     public void addCorpse(Enemy object) {
         deadThings.add(object);
+    }
+    
+    public void addItem(Item item) {
+        items.add(item);
     }
     
     private void handleKeyStrokes(Player tempPlayer) {

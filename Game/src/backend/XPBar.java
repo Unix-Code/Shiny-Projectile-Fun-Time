@@ -1,6 +1,5 @@
 package backend;
 
-import Graphics.Sprite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,8 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -71,7 +68,7 @@ public class XPBar extends ValueBar {
                 this.gainXP(deadObject.getXPValue());
             }
             handler.deadThings = new ArrayList<>();            
-            System.out.println("Current XP: " + this.getCurrValue() + "\nCurrent Level: " + level);
+//            System.out.println("Current XP: " + this.getCurrValue() + "\nCurrent Level: " + level);
         }
     }
     
