@@ -10,6 +10,8 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Date;
 import javax.imageio.ImageIO;
@@ -37,7 +39,6 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(new KeyCheck(handler));
         this.addMouseListener(new MouseCheck(handler, cam));
         new Window(width + 156, height, "Shiny Projectile Fun Time", this);
-        
         this.loadLevelImage("level");
 
         

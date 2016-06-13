@@ -22,7 +22,7 @@ public class ItemDrop extends Obj {
         super(dropX, dropY, 48, 48, ID.Item);
         this.tier = tier;
         this.handler = handler;
-        this.itemTypes = new ItemType[]{ItemType.Chest, ItemType.Helmet, ItemType.Boots, ItemType.Weapon/*, ItemType.Shield*/};
+        this.itemTypes = new ItemType[]{ItemType.Chest, ItemType.Helmet, ItemType.Boots, ItemType.Weapon, ItemType.Shield};
         droppedItem = new Item(this.x, this.y, itemTypes[(int)(itemTypes.length * Math.random())], this.tier, handler);
         
         String sType;

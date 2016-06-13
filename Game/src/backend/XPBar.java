@@ -36,10 +36,10 @@ public class XPBar extends ValueBar {
         this.calcValue();
         this.x = handler.getPlayer().getX() + Game.width/2 + 46;
         this.y = handler.getPlayer().getY() - Game.height/2 + 140;
-        if (this.getCurrValue() >= this.getMaxValue()) {
+        while (this.getCurrValue() >= this.getMaxValue()) {
             level++;
             double leftover = this.getCurrValue() - this.getMaxValue();
-            System.out.println("LeftOver: " + leftover);
+            System.out.println("LeftOver: " + leftover + ", Max: " + this.getMaxValue());
             this.setCurrValue(leftover);
             this.setMaxValue(this.getMaxValue() * (Math.pow(1.05, level)));
         }
@@ -55,7 +55,7 @@ public class XPBar extends ValueBar {
 //        g.setColor(Color.DARK_GRAY);
 //        g.drawRect(x, y, w, h);
         g.drawImage(emptyBar, x, y, null);
-        if ((int) (fill.getWidth() * (this.getCurrValue()/this.getMaxValue())) > 0) g.drawImage(fill.getSubimage(0, 0, (int) (fill.getWidth() * (this.getCurrValue()/this.getMaxValue())), fill.getHeight()), x + 8, y, null);
+        if ((int) (fill.getWidth() * (this.getCurrValue()/this.getMaxValue())) > 0 /*&& (int) (fill.getWidth() * (this.getCurrValue()/this.getMaxValue())) <= fill.getWidth()*/) g.drawImage(fill.getSubimage(0, 0, (int) (fill.getWidth() * (this.getCurrValue()/this.getMaxValue())), fill.getHeight()), x + 8, y, null);
         g.setColor(Color.red);
         g.setFont(new Font("Helvetica", Font.BOLD, 16));
         g.drawString("Level " + String.valueOf(level), x + w/3, y  - 102);

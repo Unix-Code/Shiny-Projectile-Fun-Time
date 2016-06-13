@@ -25,9 +25,11 @@ public class MouseCheck extends MouseAdapter {
 
     public void mousePressed(MouseEvent mouse) {
         if (mouse.getButton() == 1) {
-
+            
             Player tempObject = handler.getPlayer();
-
+            
+            if (!tempObject.isNotBoosted()) return;
+            
             // Calculate vector of new Projectile
             double theta = Math.atan2(mouse.getY() - (Game.height / 2.0 + tempObject.getH() / 2.0), mouse.getX() - (Game.width / 2.0 + tempObject.getW() / 2.0));
             // System.out.println(theta);

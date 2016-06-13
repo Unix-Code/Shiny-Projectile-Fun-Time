@@ -55,8 +55,8 @@ public class HealthBar extends Obj{
             x = owner.getX();
             y = owner.getY() - 15;
             lastHealth = health;
-            // health -= (owner.getVelX() <= 0) ? 1 : -1; // Diagnostic
             health = Game.clamp(health, 0, 100);
+            // health -= (owner.getVelX() <= 0) ? 1 : -1; // Diagnostic
             // System.out.println("Health: " + health); // Diagnostic for Health count
         }
     }
@@ -64,7 +64,7 @@ public class HealthBar extends Obj{
     public void render(Graphics g) {
         if (owner.getId() == ID.Player) {
             g.drawImage(emptyBar, x, y, null);
-            if ((int)(fill.getWidth() * ((double)health/fullHealth)) > 0) g.drawImage(fill.getSubimage(0, 0, (int) (fill.getWidth() * ((double)health/fullHealth)), fill.getHeight()), x + 8, y, null);
+            if ((int)(fill.getWidth() * ((double)health/fullHealth)) > 0 /*&& (int)(fill.getWidth() * ((double)health/fullHealth)) <= fill.getWidth()*/) g.drawImage(fill.getSubimage(0, 0, (int) (fill.getWidth() * (((double)health)/fullHealth)), fill.getHeight()), x + 8, y, null);
         }
         else {
             if (health == lastHealth) {
@@ -75,7 +75,7 @@ public class HealthBar extends Obj{
             }
 
             if (thisTime - lastTime >= displayTime) {
-                return;
+//                return;
             }
 
             Graphics2D g2d = (Graphics2D)g;

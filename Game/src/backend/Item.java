@@ -50,8 +50,8 @@ public class Item extends Obj {
                 adjustY = 279;
                 break;
             case Shield :
-                adjustX = 110;
-                adjustY = 276;
+                adjustX = 108;
+                adjustY = 280;
                 break;
         }
         this.x = handler.getPlayer().getX() + Game.width/2 + adjustX + 3;

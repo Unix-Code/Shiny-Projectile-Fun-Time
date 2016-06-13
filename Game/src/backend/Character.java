@@ -33,18 +33,18 @@ public class Character extends Movable {
 
     public void tick() {
         super.tick();
-        
         charHealth.tick();
+        
         this.detectProjectiles();
         if (!(this.getHealth() > 0)) {
             if (this.getId() != ID.Player) {
                 int rand = ((int)(Math.random() * 100) + 1);
-                boolean drop = rand <= 30;
+                boolean drop = rand <= 45;
                 System.out.println("Rand Drop: " + rand);
                 if (drop) {
                     int randTier = 1;
-                    if (rand == 1) randTier = 3;
-                    if (rand > 1 && rand <= 10) randTier = 2;
+                    if (rand >= 1 && rand <= 3) randTier = 3;
+                    if (rand > 3 && rand <= 12) randTier = 2;
                     handler.addObject(new ItemDrop(x, y, randTier, handler));
                     
                 }

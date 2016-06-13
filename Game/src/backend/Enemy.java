@@ -68,8 +68,8 @@ public class Enemy extends Character {
 
     public void render(Graphics g) {
         // super.render(g);
-        g.drawImage(animation.getSprite(), x - 2, y - 11, null);
         this.charHealth.render(g);
+        g.drawImage(animation.getSprite(), x - 2, y - 11, null);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.YELLOW);
         g2d.draw(perimeter);
